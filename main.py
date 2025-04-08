@@ -155,7 +155,7 @@ def main():
     shoot_cooldown = 1.25
     
     textures = Textures()
-    textures.load_textures()
+    textures.load()
 
     heart_texture = load_texture('graphics/heart.png')
     map = load_render_texture(screen_width, screen_height)
@@ -348,8 +348,8 @@ def main():
 
         end_drawing()
 
-    # close_window()
 
+    textures.unload()
 
 if __name__ == '__main__':
     loading()

@@ -1,7 +1,7 @@
 from pyray import *
 
 class Textures:
-    def load_textures(self):
+    def load(self):
         self.player_texture = load_texture('graphics/spaceship2.png')
         self.guacamole_texture = load_texture('graphics/guacamole.png')
         self.cheese_texture = load_texture('graphics/cheese.png')
@@ -11,7 +11,7 @@ class Textures:
         self.iker_texture = load_texture('graphics/iker.jpg')
         self.salsa_texture = load_texture('graphics/salsa.png')
 
-    def unload_textures(self):
+    def unload(self):
         unload_texture(self.player_texture)
         unload_texture(self.guacamole_texture)
         unload_texture(self.cheese_texture)
