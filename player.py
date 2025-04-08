@@ -1,13 +1,10 @@
 from raylib import *
 from pyray import * 
-from texture import *
-
-
 
 class player:
-    def __init__(self, pos):
+    def __init__(self, pos, texture):
         self.pos = pos
-        self.texture = player_texture
+        self.texture = texture
         self.speed = int(get_monitor_width(get_current_monitor()) * 0.35)
         self.direction = Vector2()
         self.rectangle = None
@@ -60,7 +57,7 @@ class player:
         draw_texture_pro(
             self.texture,
 
-            Rectangle(0, 0, player_texture.width, player_texture.height),
+            Rectangle(0, 0, self.texture.width, self.texture.height),
 
             self.rectangle,
 

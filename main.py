@@ -1,12 +1,12 @@
 from pyray import *
 from raylib import *
-from player import *
+from player import player
 from settings import *
 from projectile import *
 import random
 from entity import *
 from powerups import *
-from texture import *
+from textures import Textures
 
 
 def loading():
@@ -14,9 +14,9 @@ def loading():
                int(get_monitor_height(get_current_monitor())), 
                "Iker Invaders")
     set_target_fps(60)
-    game_load_textures()
-    main_menu()
 
+    main_menu()
+    close_window()
 
 def main_menu():
     
@@ -66,7 +66,6 @@ def main_menu():
         # Handle button clicks
         if is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
             if play_hover:
-                close_window()
                 main()
                 break
             elif controls_hover:
@@ -142,16 +141,12 @@ def main_menu():
                          WHITE)
         
         end_drawing()
-    close_window()
-
-
-
 
 def main():
-
     monitor = get_current_monitor()
     screen_width = get_monitor_width(monitor)
     screen_height = get_monitor_height(monitor)
+    print("reached here")
     cooldown = False
     spawn_cooldown = False
     powerup_cooldown = False
@@ -159,22 +154,20 @@ def main():
     health = 10
     shoot_cooldown = 1.25
     
+    textures = Textures()
+    textures.load_textures()
 
     heart_texture = load_texture('graphics/heart.png')
     map = load_render_texture(screen_width, screen_height)
 
     score = 0
 
-    init_window(screen_width, screen_height, "Iker Invaders")
-    set_target_fps(240)
-    wario = player(Vector2((get_monitor_width(monitor)/2), (get_monitor_height(monitor)/1.2)))
-
+    wario = player(Vector2((get_monitor_width(monitor)/2), (get_monitor_height(monitor)/1.2)), textures.player_texture)
 
     projectiles = []
     entities = []
     entities_projectiles = []
     powerups = []
-
 
     while not window_should_close():
 
@@ -183,8 +176,10 @@ def main():
             powerup_cooldown = True
             powerups.append(powerup(Vector2(
                 int(random.randint(1,10) * get_monitor_width(get_current_monitor()) * 0.075),
-                int(get_monitor_height(get_current_monitor()) * 0.05)
-            )))
+                int(get_monitor_height(get_current_monitor()) * 0.05),
+            ),
+            [textures.guacamole_texture, textures.cheese_texture, textures.sourcream_texture, textures.pico_texture]
+            ))
 
 
         elif powerup_cooldown == True:
@@ -198,7 +193,7 @@ def main():
             spawn_cooldown = True
             entities.append(entity(Vector2(int(random.randint(1,10) * get_monitor_width(get_current_monitor()) * 0.075), 
                                         int(random.randint(1, 3) * get_monitor_height(get_current_monitor()) * 0.105)),
-                                        ))
+                                        textures.iker_texture))
 
         elif spawn_cooldown == True:
 
@@ -214,7 +209,7 @@ def main():
 
                 previous_time = get_time()
                 cooldown = True
-                projectiles.append(projectile(Vector2(wario.pos.x, wario.pos.y)))   
+                projectiles.append(projectile(Vector2(wario.pos.x, wario.pos.y), textures.taco_texture))   
 
             elif cooldown == True:
                 
@@ -225,7 +220,7 @@ def main():
 
             if enti.cooldown == False:
                 enti.timer = get_time()
-                entities_projectiles.append(entity_projectile(Vector2(enti.pos.x, enti.pos.y)))
+                entities_projectiles.append(entity_projectile(Vector2(enti.pos.x, enti.pos.y), textures.salsa_texture))
                 enti.cooldown = True
 
             elif enti.cooldown == True:
@@ -308,7 +303,7 @@ def main():
         for i in range(health):
 
             draw_texture_pro(
-            load_texture('graphics/heart.png'),
+            heart_texture,
 
             Rectangle(0, 0, heart_texture.width, heart_texture.height),
 
@@ -353,6 +348,9 @@ def main():
 
         end_drawing()
 
+    # close_window()
+
 
 if __name__ == '__main__':
     loading()
+

@@ -1,13 +1,11 @@
 from pyray import *
 from raylib import *
 import random
-from texture import guacamole_texture, cheese_texture, sourcream_texture, pico_texture
-
 
 class powerup:
-    def __init__(self, pos, ):
+    def __init__(self, pos, texture_list):
         self.pos = pos
-        list_of_powerups = [guacamole_texture, cheese_texture, sourcream_texture, pico_texture]
+        list_of_powerups = texture_list
         self.type = random.randint(0, 3)
         self.texture = list_of_powerups[self.type]
         self.speed = int(get_monitor_height(get_current_monitor()) * 0.45)

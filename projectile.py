@@ -1,11 +1,10 @@
 from pyray import *
 from raylib import *
-from texture import taco_texture
 
 class projectile:
-    def __init__(self, pos):
+    def __init__(self, pos, texture):
         self.pos = pos
-        self.texture = taco_texture
+        self.texture = texture
         self.active = True
         self.rectangle = None
 

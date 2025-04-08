@@ -1,11 +1,10 @@
 from raylib import *
 from pyray import *
-from texture import iker_texture, salsa_texture
 
 class entity:
-    def __init__(self, pos,):
+    def __init__(self, pos, texture):
         self.pos = pos
-        self.texture = iker_texture
+        self.texture = texture
         self.speed = int(get_monitor_width(get_current_monitor()) * 0.35)
         self.direction = 1
         self.alive = True
@@ -35,11 +34,9 @@ class entity:
                       get_monitor_width(get_current_monitor()) * 0.10, 
                       get_monitor_height(get_current_monitor()) * 0.10)
         
-        self.texture = iker_texture
-
         draw_texture_pro(
 
-            iker_texture,
+            self.texture,
 
             Rectangle(0, 0, self.texture.width, self.texture.height),
 
@@ -54,9 +51,9 @@ class entity:
         )
 
 class entity_projectile:
-    def __init__(self, pos):
+    def __init__(self, pos, texture):
         self.pos = pos
-        self.texture = salsa_texture
+        self.texture = texture
         self.active = True
         self.rectangle = None
 
